@@ -5,8 +5,6 @@ Học viên: **Võ Quốc Huy**
 ---
 
 ## 🔗 Thông tin Nộp bài (Submission Links)
-
-- **GitHub Repository**: [https://github.com/Huy0123/Track2_Day22_2A202601188_VoQuocHuy](https://github.com/Huy0123/Track2_Day22_2A202601188_VoQuocHuy)
 - **LangSmith Project URL**: [https://smith.langchain.com/o/b4e3076f-c21a-4db2-9d9a-1a037a47afc6/projects/p/5ba41338-2488-462d-b148-0525964b1a6e](https://smith.langchain.com/o/b4e3076f-c21a-4db2-9d9a-1a037a47afc6/projects/p/5ba41338-2488-462d-b148-0525964b1a6e)
 - **LangSmith Project Name**: `day22-lab`
 
