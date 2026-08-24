@@ -105,7 +105,7 @@ def get_embeddings(provider: str = None):
     """
     provider = (provider or config.PROVIDER).lower()
 
-    if provider in ("openai", "openrouter"):
+    if provider == "openai":
         from langchain_openai import OpenAIEmbeddings
         kwargs = {
             "model": config.OPENAI_EMBEDDING_MODEL,
@@ -114,6 +114,30 @@ def get_embeddings(provider: str = None):
         if config.OPENAI_BASE_URL:
             kwargs["base_url"] = config.OPENAI_BASE_URL
         return OpenAIEmbeddings(**kwargs)
+
+    elif provider == "openrouter":
+        if config.OPENAI_API_KEY:
+            from langchain_openai import OpenAIEmbeddings
+            return OpenAIEmbeddings(
+                model=config.OPENAI_EMBEDDING_MODEL,
+                api_key=config.OPENAI_API_KEY,
+            )
+        from langchain_core.embeddings import Embeddings
+        from langchain_community.embeddings import FastEmbedEmbeddings
+
+        class SafeEmbeddings(Embeddings):
+            def __init__(self, base, model_name: str = "BAAI/bge-small-en-v1.5"):
+                self._base = base
+                self.model = model_name
+                self.model_name = model_name
+
+            def embed_documents(self, texts: list[str]) -> list[list[float]]:
+                return self._base.embed_documents(texts)
+
+            def embed_query(self, text: str) -> list[float]:
+                return self._base.embed_query(text)
+
+        return SafeEmbeddings(FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5"))
 
     elif provider == "gemini":
         from langchain_google_genai import GoogleGenerativeAIEmbeddings
